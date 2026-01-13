@@ -38,9 +38,9 @@
     {
       "name": "raisin_robot_packages",
       "path": "raisin_robot_packages",
-      "remote": "git@github.com:iamchoking/raisin_robot_packages.git",
+      "remote": "git@github.com:raionrobotics/raisin_robot_packages.git",
       "branch": "main",
-      "commit": "2105d4a7f7c91262c98203318b77de45df205235"
+      "commit": "56ec9f2173cdece95c0db6e8478cf1ef2090538c"
     }
   ]
 }
