@@ -1,0 +1,33 @@
+{
+    "python-envs.defaultEnvManager": "ms-python.python:conda",
+    "python-envs.defaultPackageManager": "ms-python.python:conda",
+    "python-envs.pythonProjects": [
+        {
+            "path": "",
+            "envManager": "ms-python.python:conda",
+            "packageManager": "ms-python.python:conda"
+        }
+    ],
+    "python.defaultInterpreterPath": "~/anaconda3",
+    "python.terminal.activateEnvironment": true,
+
+    "git.detectSubmodules": true,
+    "git.detectSubmodulesLimit": 20,
+    "git.autoRepositoryDetection": "subFolders",
+    "git.repositoryScanMaxDepth": 10,
+
+    "explorer.autoReveal": false,
+    "search.useIgnoreFiles": false,
+
+    "search.exclude": {
+        "**/cmake-build-*": true,        // All cmake build dirs
+        "**/build": true,                // Generic build dirs
+        "**/vcpkg_installed": true,      // vcpkg packages
+        "**/.git": true,                 // Git metadata
+        "**/*.o": true,                  // Object files
+        "**/*.a": true,                  // Static libraries
+        "**/*.so": true,                 // Shared libraries
+        "**/log": true                   // Log files
+    }
+
+}
