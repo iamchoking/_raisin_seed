@@ -1,0 +1,46 @@
+{
+  "repositories": [
+    {
+      "name": "raipal_controller",
+      "path": "raipal_controller",
+      "remote": "git@github.com:railabatkaist/raipal_controller.git",
+      "branch": "main",
+      "commit": "33a16cb367f1b1ed0b478a93f63a15c29c5792a1"
+    },
+    {
+      "name": "raisin",
+      "path": "raisin",
+      "remote": "git@github.com:raionrobotics/raisin.git",
+      "branch": "main",
+      "commit": "1cc126a6e065b859af2f6dc770cf5dfd9ae50a82"
+    },
+    {
+      "name": "raisin_gui",
+      "path": "raisin_gui",
+      "remote": "git@github.com:raionrobotics/raisin_gui.git",
+      "branch": "feat/fixed_base",
+      "commit": "8bbd178d6b6792c6cf039fddf83d02b640c4ab35"
+    },
+    {
+      "name": "raisin_plugin",
+      "path": "raisin_plugin",
+      "remote": "git@github.com:raionrobotics/raisin_plugin.git",
+      "branch": "main",
+      "commit": "6d5aebe0053adc6b441b72fe31548d447f824f64"
+    },
+    {
+      "name": "raisin_raipal",
+      "path": "raisin_raipal",
+      "remote": "git@github.com:iamchoking/raisin_raipal.git",
+      "branch": "feat/get-ready",
+      "commit": "74afb6c68a91cae0eb9be54ce10a0abc5dc92f12"
+    },
+    {
+      "name": "raisin_robot_packages",
+      "path": "raisin_robot_packages",
+      "remote": "git@github.com:iamchoking/raisin_robot_packages.git",
+      "branch": "main",
+      "commit": "2105d4a7f7c91262c98203318b77de45df205235"
+    }
+  ]
+}
