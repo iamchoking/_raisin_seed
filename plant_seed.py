@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import os
+import shlex
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -10,6 +12,7 @@ from pathlib import Path
 from typing import List
 
 SRC_ROOT = Path(__file__).resolve().parents[1]
+WORKSPACE_ROOT = SRC_ROOT.parent
 CONFIG_DIR = Path(__file__).resolve().parent / "config" / "seeds"
 DEFAULT_SEED_BASENAME = "repositories"
 
@@ -48,7 +51,28 @@ class SeedError(RuntimeError):
     pass
 
 
+def relpath_from_src(path: Path) -> str:
+    return os.path.relpath(path, SRC_ROOT)
+
+
+def format_repo_label(path: Path) -> str:
+    relative = relpath_from_src(path)
+    if path == WORKSPACE_ROOT:
+        return f"[root] {WORKSPACE_ROOT.name}"
+    return relative
+
+
+def ensure_within_workspace(path: Path) -> None:
+    try:
+        path.relative_to(WORKSPACE_ROOT)
+    except ValueError as exc:
+        raise SeedError(f"Path escapes workspace root: {path}") from exc
+
+
 def run(cmd: List[str], cwd: Path | None = None) -> str:
+    if cmd and cmd[0] == "git":
+        printable = " ".join(shlex.quote(part) for part in cmd)
+        print(f"[git] {printable}", flush=True)
     result = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
     if result.returncode != 0:
         raise SeedError(result.stderr.strip() or "Command failed: " + " ".join(cmd))
@@ -129,7 +153,7 @@ def load_seed(seed_path: Path) -> List[RepoSpec]:
         try:
             rel_path = Path(entry["path"])
             resolved = (SRC_ROOT / rel_path).resolve()
-            resolved.relative_to(SRC_ROOT)
+            ensure_within_workspace(resolved)
             specs.append(
                 RepoSpec(
                     name=entry["name"],
@@ -185,8 +209,8 @@ def plan_repo(spec: RepoSpec) -> RepoPlan:
 def show_plan(plans: List[RepoPlan]) -> None:
     print("Pending git actions:\n")
     for idx, plan in enumerate(plans, 1):
-        relative = plan.spec.path.relative_to(SRC_ROOT)
-        print(f"{idx}. {relative} ({plan.status})")
+        label = format_repo_label(plan.spec.path)
+        print(f"{idx}. {label} ({plan.status})")
         for step in plan.steps:
             print(f"   - {step}")
         print()
@@ -237,11 +261,11 @@ def main(argv: List[str] | None = None) -> int:
             print("Aborted. No git commands executed.")
             return 0
         for plan in plans:
-            relative = plan.spec.path.relative_to(SRC_ROOT)
+            label = format_repo_label(plan.spec.path)
             if not plan.needs_action:
-                print(f"Skipping {relative} (already matches seed).")
+                print(f"Skipping {label} (already matches seed).")
                 continue
-            print(f"Syncing {relative} ...", end=" ")
+            print(f"Syncing {label} ...", end=" ")
             changed = ensure_repo(plan.spec)
             if changed:
                 print("done")

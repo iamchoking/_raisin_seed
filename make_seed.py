@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -10,9 +11,11 @@ from pathlib import Path
 from typing import Dict, Iterable, List
 
 SRC_ROOT = Path(__file__).resolve().parents[1]
+WORKSPACE_ROOT = SRC_ROOT.parent
 CONFIG_DIR = Path(__file__).resolve().parent / "config" / "seeds"
 DEFAULT_SEED_BASENAME = "repositories"
 SKIP_NAMES = {"_raisin_seed", ".git"}
+ROOT_RELATIVE_PATH = Path(os.path.relpath(WORKSPACE_ROOT, SRC_ROOT)).as_posix()
 
 
 def normalize_seed_filename(raw_name: str | None) -> str:
@@ -89,8 +92,14 @@ def collect_repo_metadata(path: Path) -> RepoSnapshot:
     remote_url = run_git(path, "remote", "get-url", remote_name)
     branch = current_branch(path)
     commit = run_git(path, "rev-parse", "HEAD")
-    rel_path = path.relative_to(SRC_ROOT).as_posix()
+    rel_path = Path(os.path.relpath(path, SRC_ROOT)).as_posix()
     return RepoSnapshot(name=path.name, path=rel_path, remote=remote_url, branch=branch, commit=commit)
+
+
+def format_repo_path_label(path_str: str) -> str:
+    if path_str == ROOT_RELATIVE_PATH:
+        return f"[root] {WORKSPACE_ROOT.name}"
+    return path_str
 
 
 def discover_repositories() -> List[RepoSnapshot]:
@@ -103,6 +112,9 @@ def discover_repositories() -> List[RepoSnapshot]:
         if not is_git_repository(entry):
             continue
         repos.append(collect_repo_metadata(entry))
+    if is_git_repository(WORKSPACE_ROOT):
+        repos.append(collect_repo_metadata(WORKSPACE_ROOT))
+    repos.sort(key=lambda snapshot: snapshot.path)
     return repos
 
 
@@ -160,10 +172,12 @@ def summarize_seed_changes(old_map: Dict[str, dict], new_map: Dict[str, dict]) -
     new_paths = set(new_map)
 
     for path in sorted(new_paths - old_paths):
-        changes.append(f"+ {path}: {format_repo_state(new_map[path])}")
+        label = format_repo_path_label(path)
+        changes.append(f"+ {label}: {format_repo_state(new_map[path])}")
 
     for path in sorted(old_paths - new_paths):
-        changes.append(f"- {path}: removed from seed")
+        label = format_repo_path_label(path)
+        changes.append(f"- {label}: removed from seed")
 
     for path in sorted(old_paths & new_paths):
         old_entry = old_map[path]
@@ -178,7 +192,8 @@ def summarize_seed_changes(old_map: Dict[str, dict], new_map: Dict[str, dict]) -
                 )
         if diffs:
             diff_text = ", ".join(diffs)
-            changes.append(f"~ {path}: {diff_text}")
+            label = format_repo_path_label(path)
+            changes.append(f"~ {label}: {diff_text}")
 
     return changes
 

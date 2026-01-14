@@ -1,11 +1,18 @@
 {
   "repositories": [
     {
+      "name": "raisin_master",
+      "path": "..",
+      "remote": "git@github.com:raionrobotics/raisin_master.git",
+      "branch": "main",
+      "commit": "e52cf02f056b570a407ef95cb131cb9363ec4e3d"
+    },
+    {
       "name": "raipal_controller",
       "path": "raipal_controller",
       "remote": "git@github.com:railabatkaist/raipal_controller.git",
-      "branch": "main",
-      "commit": "33a16cb367f1b1ed0b478a93f63a15c29c5792a1"
+      "branch": "feat/ik-teleop",
+      "commit": "effb15177633f0f6a490d704c21671b17d950a7a"
     },
     {
       "name": "raisin",
@@ -33,7 +40,7 @@
       "path": "raisin_raipal",
       "remote": "git@github.com:iamchoking/raisin_raipal.git",
       "branch": "feat/get-ready",
-      "commit": "30aa057a273a6517daab06acde04c35179107339"
+      "commit": "a5047877b24e3ac8924878ecde459d48bb453200"
     },
     {
       "name": "raisin_robot_packages",
