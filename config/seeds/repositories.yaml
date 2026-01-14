@@ -12,7 +12,7 @@
       "path": "raipal_controller",
       "remote": "git@github.com:railabatkaist/raipal_controller.git",
       "branch": "feat/ik-teleop",
-      "commit": "effb15177633f0f6a490d704c21671b17d950a7a"
+      "commit": "7c2c5a6955d126b554f431402cfd9cc12c42e34d"
     },
     {
       "name": "raisin",
