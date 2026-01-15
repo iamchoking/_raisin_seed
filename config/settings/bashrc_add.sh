@@ -9,4 +9,5 @@ alias raisin_gui='cd $RAISIN_MASTER_DIR && source ./ld_prefix_path.sh && sudo ./
 alias raipal_node='cd $RAISIN_MASTER_DIR && source ./ld_prefix_path.sh && sudo ./cmake-build-release/src/raisin_raipal/raisin_raipal_node'
 alias raibo2_node='cd $RAISIN_MASTER_DIR && source ./ld_prefix_path.sh && sudo ./install/bin/raisin_raibo2_node'
 
+alias raisin_config='sudo nautilus --browser /root/.raisin'
 # <<< _raisin_seed <<<

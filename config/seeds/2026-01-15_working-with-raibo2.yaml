@@ -8,6 +8,13 @@
       "commit": "e52cf02f056b570a407ef95cb131cb9363ec4e3d"
     },
     {
+      "name": "raibo_controller",
+      "path": "raibo_controller",
+      "remote": "git@github.com:raionrobotics/raibo_controller.git",
+      "branch": "main",
+      "commit": "14e6c18f035e2de29f65d7403a5234373fa570b7"
+    },
+    {
       "name": "raipal_controller",
       "path": "raipal_controller",
       "remote": "git@github.com:railabatkaist/raipal_controller.git",
@@ -34,6 +41,13 @@
       "remote": "git@github.com:raionrobotics/raisin_plugin.git",
       "branch": "main",
       "commit": "6d5aebe0053adc6b441b72fe31548d447f824f64"
+    },
+    {
+      "name": "raisin_raibo2",
+      "path": "raisin_raibo2",
+      "remote": "git@github.com:raionrobotics/raisin_raibo2.git",
+      "branch": "main",
+      "commit": "100006169be18ab7434b49b44e0d250f5e10d0be"
     },
     {
       "name": "raisin_raipal",

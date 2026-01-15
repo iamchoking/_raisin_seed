@@ -1,0 +1,9 @@
+fullscreen:
+  value: false
+  dtype: bool
+
+
+
+window_size:
+  value: [1920,1080]
+  dtype: vector<int>

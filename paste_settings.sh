@@ -11,6 +11,8 @@ BASHRC_SNIPPET="${CONFIG_DIR}/bashrc_add.sh"
 BASHRC_TARGET="${HOME}/.bashrc"
 MARKER_START="# >>> _raisin_seed >>>"
 MARKER_END="# <<< _raisin_seed <<<"
+ROOT_RAISIN_SNAPSHOT="${CONFIG_DIR}/.raisin"
+ROOT_RAISIN_TARGET="/root/.raisin"
 
 mkdir -p "${VSCODE_DIR}"
 
@@ -51,3 +53,26 @@ apply_bashrc_snippet() {
 }
 
 apply_bashrc_snippet
+
+restore_root_raisin() {
+  if [[ ! -d "${ROOT_RAISIN_SNAPSHOT}" ]]; then
+    echo "Warning: snapshot ${ROOT_RAISIN_SNAPSHOT} missing; skipping /root/.raisin restore." >&2
+    return
+  fi
+
+  local rsync_cmd=(rsync -a --delete "${ROOT_RAISIN_SNAPSHOT}/" "${ROOT_RAISIN_TARGET}/")
+  if [[ $(id -u) -eq 0 ]]; then
+    mkdir -p "${ROOT_RAISIN_TARGET}"
+    "${rsync_cmd[@]}"
+  else
+    if ! command -v sudo >/dev/null 2>&1; then
+      echo "Error: need sudo to write ${ROOT_RAISIN_TARGET}." >&2
+      exit 1
+    fi
+    sudo mkdir -p "${ROOT_RAISIN_TARGET}"
+    sudo "${rsync_cmd[@]}"
+  fi
+  echo "Restored ${ROOT_RAISIN_TARGET} from ${ROOT_RAISIN_SNAPSHOT}"
+}
+
+restore_root_raisin

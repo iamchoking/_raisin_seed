@@ -11,6 +11,8 @@ BASHRC_TARGET="${HOME}/.bashrc"
 BASHRC_OUTPUT="${CONFIG_DIR}/bashrc_add.sh"
 MARKER_START="# >>> _raisin_seed >>>"
 MARKER_END="# <<< _raisin_seed <<<"
+ROOT_RAISIN_SRC="/root/.raisin"
+ROOT_RAISIN_SNAPSHOT="${CONFIG_DIR}/.raisin"
 
 mkdir -p "${CONFIG_DIR}"
 
@@ -40,3 +42,28 @@ else
   echo "Warning: marker block not found in ${BASHRC_TARGET}; skipping bashrc export." >&2
   : > "${BASHRC_OUTPUT}"
 fi
+
+sync_root_raisin_snapshot() {
+  local use_sudo=false
+  if [[ -d "${ROOT_RAISIN_SRC}" ]]; then
+    :
+  elif command -v sudo >/dev/null 2>&1 && sudo test -d "${ROOT_RAISIN_SRC}"; then
+    use_sudo=true
+  else
+    echo "Warning: ${ROOT_RAISIN_SRC} not accessible; skipping root snapshot." >&2
+    rm -rf "${ROOT_RAISIN_SNAPSHOT}"
+    return
+  fi
+
+  mkdir -p "${ROOT_RAISIN_SNAPSHOT}"
+  local rsync_cmd=(rsync -a --delete "${ROOT_RAISIN_SRC}/" "${ROOT_RAISIN_SNAPSHOT}/")
+  if [[ "${use_sudo}" == true ]]; then
+    sudo "${rsync_cmd[@]}"
+    sudo chown -R "$(id -u -n)":"$(id -g -n)" "${ROOT_RAISIN_SNAPSHOT}"
+  else
+    "${rsync_cmd[@]}"
+  fi
+  echo "Saved ${ROOT_RAISIN_SRC} to ${ROOT_RAISIN_SNAPSHOT}"
+}
+
+sync_root_raisin_snapshot

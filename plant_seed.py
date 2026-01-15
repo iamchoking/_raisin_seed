@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import shlex
+import shutil
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -120,6 +121,13 @@ def git_reset_hard(path: Path, commit: str) -> None:
     run(["git", "-C", str(path), "reset", "--hard", commit], cwd=None)
 
 
+def git_update_submodules(path: Path) -> None:
+    run(
+        ["git", "-C", str(path), "submodule", "update", "--init", "--recursive"],
+        cwd=None,
+    )
+
+
 def clone_repo(remote: str, destination: Path) -> None:
     run(["git", "clone", remote, str(destination)])
 
@@ -203,6 +211,7 @@ def plan_repo(spec: RepoSpec) -> RepoPlan:
     )
     steps.append(checkout_desc)
     steps.append(f"reset --hard {spec.commit[:12]}")
+    steps.append("update submodules (init --recursive)")
     return RepoPlan(spec=spec, status=status, steps=steps, needs_action=needs_action)
 
 
@@ -239,7 +248,43 @@ def ensure_repo(spec: RepoSpec) -> bool:
         clone_repo(spec.remote, target)
     git_checkout(target, spec.branch, spec.commit)
     git_reset_hard(target, spec.commit)
+    git_update_submodules(target)
     return True
+
+
+IGNORED_ORPHANS = {"_raisin_seed"}
+
+
+def find_orphan_repos(specs: List[RepoSpec]) -> List[Path]:
+    tracked = {spec.path.resolve() for spec in specs}
+    orphans: List[Path] = []
+    for entry in SRC_ROOT.iterdir():
+        if not entry.is_dir():
+            continue
+        if entry.name in IGNORED_ORPHANS:
+            continue
+        git_dir = entry / ".git"
+        if git_dir.exists() and entry.resolve() not in tracked:
+            ensure_within_workspace(entry)
+            orphans.append(entry)
+    return sorted(orphans)
+
+
+def show_orphan_plan(orphans: List[Path]) -> None:
+    if not orphans:
+        # print("No extra git repositories detected in src/\n")
+        return
+    print("Repositories to be removed (not present in seed):\n")
+    for idx, orphan in enumerate(orphans, 1):
+        print(f"{idx}. {format_repo_label(orphan)}")
+    print()
+
+
+def delete_repo(path: Path) -> None:
+    if not path.exists():
+        return
+    ensure_within_workspace(path)
+    shutil.rmtree(path)
 
 
 def main(argv: List[str] | None = None) -> int:
@@ -253,10 +298,13 @@ def main(argv: List[str] | None = None) -> int:
             print("No repositories to plant.")
             return 0
         plans = [plan_repo(spec) for spec in specs]
+        orphan_repos = find_orphan_repos(specs)
         show_plan(plans)
+        show_orphan_plan(orphan_repos)
         if not any(plan.needs_action for plan in plans):
-            print("All repositories already match the seed.")
-            return 0
+            if not orphan_repos:
+                print("All repositories already match the seed.")
+                return 0
         if not confirm_execution():
             print("Aborted. No git commands executed.")
             return 0
@@ -271,6 +319,11 @@ def main(argv: List[str] | None = None) -> int:
                 print("done")
             else:
                 print("already up-to-date")
+        for orphan in orphan_repos:
+            label = format_repo_label(orphan)
+            print(f"Removing {label} ...", end=" ")
+            delete_repo(orphan)
+            print("deleted")
         return 0
     except SeedError as exc:
         print(f"Error: {exc}", file=sys.stderr)
