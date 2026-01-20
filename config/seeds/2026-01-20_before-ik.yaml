@@ -12,7 +12,7 @@
       "path": "raipal_controller",
       "remote": "git@github.com:railabatkaist/raipal_controller.git",
       "branch": "feat/ik-teleop",
-      "commit": "e4bde9429f47fbbce081e161d8cdbcf19d7e9f29"
+      "commit": "1145b4c4bddce5e74ed865cbb0b6668d181a9cdc"
     },
     {
       "name": "raisin",
@@ -40,7 +40,7 @@
       "path": "raisin_raipal",
       "remote": "git@github.com:railabatkaist/raisin_raipal.git",
       "branch": "chore/cleanup",
-      "commit": "75e61618d8380fd9ab0076fbf943e9ef5a0fbc99"
+      "commit": "f0cabdcee9e16370a0d222b16e92f3b7f2ca1a33"
     },
     {
       "name": "raisin_robot_packages",
