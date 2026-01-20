@@ -12,7 +12,7 @@
       "path": "raipal_controller",
       "remote": "git@github.com:railabatkaist/raipal_controller.git",
       "branch": "feat/ik-teleop",
-      "commit": "e4bde9429f47fbbce081e161d8cdbcf19d7e9f29"
+      "commit": "f2a2634d6ec279b1bcd383180ff14ec810411ca7"
     },
     {
       "name": "raisin",
@@ -25,8 +25,8 @@
       "name": "raisin_gui",
       "path": "raisin_gui",
       "remote": "git@github.com:raionrobotics/raisin_gui.git",
-      "branch": "feat/fixed_base",
-      "commit": "b4e193ba8f015045b82a77faa08399457cb475b6"
+      "branch": "main",
+      "commit": "d166081d9dda255cac5807abac4333a51cb152a9"
     },
     {
       "name": "raisin_plugin",

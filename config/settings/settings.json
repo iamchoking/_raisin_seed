@@ -9,7 +9,7 @@
         }
     ],
     "python.defaultInterpreterPath": "~/anaconda3",
-    "python.terminal.activateEnvironment": true,
+    "python.terminal.activateEnvironment": false,
 
     "git.detectSubmodules": true,
     "git.detectSubmodulesLimit": 20,
