@@ -11,8 +11,8 @@
       "name": "raipal_controller",
       "path": "raipal_controller",
       "remote": "git@github.com:railabatkaist/raipal_controller.git",
-      "branch": "main",
-      "commit": "88219dbb5c56208bbd6fb539ee3c67a10d0c8319"
+      "branch": "feat/gravity_compensation",
+      "commit": "ce0402f09c4dd03d811768d5152c54e9d0e1a127"
     },
     {
       "name": "raisin",
@@ -39,8 +39,8 @@
       "name": "raisin_raipal",
       "path": "raisin_raipal",
       "remote": "git@github.com:railabatkaist/raisin_raipal.git",
-      "branch": "main",
-      "commit": "3b199e4fa533f5c3fe9f594fd520edb5889d89c9"
+      "branch": "chore/topics",
+      "commit": "99d24174faf4fce41182fe7a7c89a68db2185dab"
     },
     {
       "name": "raisin_robot_packages",
