@@ -5,49 +5,56 @@
       "path": "..",
       "remote": "git@github.com:raionrobotics/raisin_master.git",
       "branch": "main",
-      "commit": "e52cf02f056b570a407ef95cb131cb9363ec4e3d"
+      "commit": "1cb603863bb4eb8bbc1c2afd18790a90117d3936"
     },
     {
       "name": "raipal_controller",
       "path": "raipal_controller",
       "remote": "git@github.com:railabatkaist/raipal_controller.git",
-      "branch": "main",
-      "commit": "8a9c279f09531417303eb2ab8d5994dcff2a1645"
+      "branch": "feat/dual-arms",
+      "commit": "cccb3310200219113a76f717e76d320902121ee1"
     },
     {
       "name": "raisin",
       "path": "raisin",
       "remote": "git@github.com:raionrobotics/raisin.git",
       "branch": "main",
-      "commit": "1cc126a6e065b859af2f6dc770cf5dfd9ae50a82"
+      "commit": "5e2ca6126ccb5b3aa49ac34c545a4fba85d7ffec"
     },
     {
       "name": "raisin_gui",
       "path": "raisin_gui",
       "remote": "git@github.com:raionrobotics/raisin_gui.git",
-      "branch": "main",
-      "commit": "d166081d9dda255cac5807abac4333a51cb152a9"
+      "branch": "chore/config-path",
+      "commit": "07820b7fc98697c0081db3bf30796d167d3c6fa1"
     },
     {
       "name": "raisin_plugin",
       "path": "raisin_plugin",
       "remote": "git@github.com:raionrobotics/raisin_plugin.git",
       "branch": "main",
-      "commit": "6d5aebe0053adc6b441b72fe31548d447f824f64"
+      "commit": "57af14182bd79acb50d7bd3a666da27b4e57f871"
     },
     {
       "name": "raisin_raipal",
       "path": "raisin_raipal",
       "remote": "git@github.com:railabatkaist/raisin_raipal.git",
-      "branch": "main",
-      "commit": "c8e776f8fbf59ae712787aa8e35e65e6129d6214"
+      "branch": "feat/dual-arms",
+      "commit": "b16bf384092f4924465606ef8c3cfc4c4a5d4d1f"
     },
     {
       "name": "raisin_robot_packages",
       "path": "raisin_robot_packages",
       "remote": "git@github.com:raionrobotics/raisin_robot_packages.git",
       "branch": "main",
-      "commit": "56ec9f2173cdece95c0db6e8478cf1ef2090538c"
+      "commit": "7c6c74e893ffa6c5290be36c423b8081878d38a6"
+    },
+    {
+      "name": "raisin_third_party_gui",
+      "path": "raisin_third_party_gui",
+      "remote": "git@github.com:raionrobotics/raisin_third_party_gui.git",
+      "branch": "main",
+      "commit": "c2912ab0f1a2cdf110daeb068bcc2413c705fa51"
     }
   ]
 }
